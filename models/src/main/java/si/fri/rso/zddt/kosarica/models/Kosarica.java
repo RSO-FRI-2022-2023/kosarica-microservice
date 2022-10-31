@@ -15,8 +15,8 @@ import java.util.List;
                 @NamedQuery(name = "Kosarica.getById",
                         query = "SELECT k FROM Kosarica k where k.id = :kosaricaId"),
                 //vrni kosarico glede na user_id
-                @NamedQuery(name = "Kosarica.getById",
-                        query = "SELECT k FROM Kosarica k where k.user_id = :userId")
+                @NamedQuery(name = "Kosarica.getByUserId",
+                        query = "SELECT k FROM Kosarica k where k.user.id = :userId")
         })
 public class Kosarica implements Serializable {
 
