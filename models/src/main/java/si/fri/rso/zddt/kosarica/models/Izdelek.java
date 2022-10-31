@@ -23,6 +23,7 @@ import java.util.List;
                         query = "SELECT i FROM Izdelek i WHERE i.naziv = :naziv")
         })
 public class Izdelek implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "izdelek_id")
