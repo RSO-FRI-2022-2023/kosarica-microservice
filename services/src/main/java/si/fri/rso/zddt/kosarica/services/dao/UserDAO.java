@@ -1,15 +1,16 @@
 package si.fri.rso.zddt.kosarica.services.dao;
 
 import lombok.extern.slf4j.Slf4j;
-import si.fri.rso.zddt.kosarica.models.User;
+import si.fri.rso.zddt.kosarica.models.Uporabnik;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @ApplicationScoped
@@ -18,10 +19,10 @@ public class UserDAO {
     @PersistenceContext(unitName = "kosarica-jpa")
     private EntityManager em;
 
-    public List<User> getAllUsers() {
+    public List<Uporabnik> getAllUsers() {
         try {
-            Query q = em.createNamedQuery("User.getAll", User.class);
-            return (List<User>) q.getResultList();
+            TypedQuery<Uporabnik> q = em.createNamedQuery("Uporabnik.getAll", Uporabnik.class);
+            return q.getResultList();
         } catch (Exception e) {
             log.error("Napaka pri pridobivanju uporabnikov", e);
         }
@@ -29,12 +30,9 @@ public class UserDAO {
         return Collections.emptyList();
     }
 
-    public User getUserById(Integer userId) {
+    public Uporabnik getUserById(Integer userId) {
         try {
-            Query q = em.createNamedQuery("User.getById", User.class);
-            q.setParameter("userId", userId);
-
-            return (User) q.getSingleResult();
+            return em.find(Uporabnik.class, userId);
         } catch (Exception e) {
             log.error("Napaka pri pridobivanju uporabnika", e);
         }
@@ -45,9 +43,10 @@ public class UserDAO {
     @Transactional
     public boolean deleteUser(Integer userId) {
         try {
-            User user = getUserById(userId);
-            if (user != null) {
-                em.remove(user);
+            Uporabnik uporabnik = getUserById(userId);
+
+            if (uporabnik != null) {
+                em.remove(uporabnik);
 
                 return true;
             }
@@ -59,9 +58,23 @@ public class UserDAO {
     }
 
     @Transactional
-    public User updateUser(User user) {
+    public Uporabnik updateUser(Uporabnik uporabnik) {
         try {
-            return em.merge(user);
+            Uporabnik u1 = getUserById(uporabnik.getId());
+
+            if (u1 != null) {
+                if (!Objects.equals(u1.getFirstname(), uporabnik.getFirstname())) {
+                    u1.setFirstname(uporabnik.getFirstname());
+                }
+
+                if (!Objects.equals(u1.getLastname(), uporabnik.getLastname())) {
+                    u1.setLastname(uporabnik.getLastname());
+                }
+
+                em.merge(u1);
+
+                return u1;
+            }
         } catch (Exception e) {
             log.error("Napaka pri posodabljanju uporabnika", e);
         }
@@ -70,13 +83,13 @@ public class UserDAO {
     }
 
     @Transactional
-    public User addUser(User user) {
+    public Uporabnik addUser(Uporabnik uporabnik) {
         try {
-            if (user != null) {
-                em.persist(user);
+            if (uporabnik != null) {
+                em.persist(uporabnik);
             }
 
-            return user;
+            return uporabnik;
         } catch (Exception e) {
             log.error("Napaka pri dodajanju uporabnika", e);
         }

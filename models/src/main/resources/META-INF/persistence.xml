@@ -4,7 +4,7 @@
         <jta-data-source>jdbc/KosaricaDS</jta-data-source>
 
         <class>si.fri.rso.zddt.kosarica.models.Kosarica</class>
-        <class>si.fri.rso.zddt.kosarica.models.User</class>
+        <class>si.fri.rso.zddt.kosarica.models.Uporabnik</class>
         <class>si.fri.rso.zddt.kosarica.models.Cena</class>
         <class>si.fri.rso.zddt.kosarica.models.Trgovina</class>
         <class>si.fri.rso.zddt.kosarica.models.Izdelek</class>

@@ -114,3 +114,9 @@ INSERT INTO Cena (izdelek_id, trgovina_id, cena) VALUES (15,2,22.00);
 INSERT INTO Cena (izdelek_id, trgovina_id, cena) VALUES (15,3,23.00);
 INSERT INTO Cena (izdelek_id, trgovina_id, cena) VALUES (15,4,25.99);
 INSERT INTO Cena (izdelek_id, trgovina_id, cena) VALUES (15,5,19.99);
+
+INSERT INTO Uporabnik (firstname, lastname) VALUES ('David', 'Trafela');
+
+INSERT INTO Kosarica(user_id) VALUES (1);
+
+INSERT INTO Kosarica_izdelek(kosarica_kosarica_id, izdelki_izdelek_id) VALUES (1, 1);

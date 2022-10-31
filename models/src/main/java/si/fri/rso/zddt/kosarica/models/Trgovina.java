@@ -27,7 +27,6 @@ public class Trgovina implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trgovina_id")
-
     private Integer id;
     private String ime;
     private String lokacija;

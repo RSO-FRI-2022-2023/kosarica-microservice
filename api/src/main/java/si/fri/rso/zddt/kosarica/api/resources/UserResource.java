@@ -1,12 +1,13 @@
 package si.fri.rso.zddt.kosarica.api.resources;
 
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import si.fri.rso.zddt.kosarica.models.User;
+import si.fri.rso.zddt.kosarica.models.Uporabnik;
 import si.fri.rso.zddt.kosarica.services.dao.UserDAO;
 
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Slf4j
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -25,27 +27,34 @@ public class UserResource {
     @Operation(description = "Vrni seznam uporabnikov.", summary = "Seznam uporabnikov")
     @APIResponse(responseCode = "200",
             description = "Seznam uporabnikov.",
-            content = @Content(
-                    schema = @Schema(implementation = User.class))
+            content = @Content(mediaType = MediaType.APPLICATION_JSON,
+                    schema = @Schema(implementation = Uporabnik.class,
+                            readOnly = true,
+                            description = "the users",
+                            required = true,
+                            name = "Users"))
     )
     @GET
     public Response getAllUsers() {
-        return Response.status(Response.Status.OK).entity(userDAO.getAllUsers()).build();
+        return Response
+                .status(Response.Status.OK)
+                .entity(userDAO.getAllUsers())
+                .build();
     }
 
     @Operation(description = "Vrni uporabnika glede na ID.", summary = "Vrni uporabnika")
     @APIResponse(responseCode = "200",
             description = "Uporabnik",
             content = @Content(
-                    schema = @Schema(implementation = User.class))
+                    schema = @Schema(implementation = Uporabnik.class))
     )
     @APIResponse(responseCode = "404",
             description = "Uporabnik bi bil najden.")
     @GET
     @Path("{id}")
     public Response getUserById(@PathParam("id") Integer userId) {
-        User user = userDAO.getUserById(userId);
-        if (user != null) {
+        Uporabnik uporabnik = userDAO.getUserById(userId);
+        if (uporabnik != null) {
             return Response
                     .status(Response.Status.OK)
                     .entity(userDAO)
@@ -71,7 +80,10 @@ public class UserResource {
                     .entity(success)
                     .build();
         } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(success)
+                    .build();
         }
     }
 
@@ -79,7 +91,7 @@ public class UserResource {
     @APIResponse(responseCode = "201",
             description = "Dodajanje uporabnika",
             content = @Content(
-                    schema = @Schema(implementation = User.class))
+                    schema = @Schema(implementation = Uporabnik.class))
     )
     @APIResponse(responseCode = "500",
             description = "Napaka pri dodajanju uporabnika.")
@@ -88,16 +100,22 @@ public class UserResource {
             description = "User to create",
             required = true,
             content = @Content(
-                    schema = @Schema(type = SchemaType.OBJECT, implementation = User.class)))
-                            User user) {
-        User user1 = userDAO.addUser(user);
-        if (user1 != null) {
+                    example = "{\"firstname\"=\"David\", \"lastname\"=\"Trafela\"}",
+                    schema = @Schema(type = SchemaType.OBJECT, implementation = Uporabnik.class)))
+                            Uporabnik uporabnik) {
+        log.info("User {}", uporabnik);
+
+        Uporabnik uporabnik1 = userDAO.addUser(uporabnik);
+        if (uporabnik1 != null) {
             return Response
                     .status(Response.Status.CREATED)
-                    .entity(user1)
+                    .entity(uporabnik1)
                     .build();
         } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(false)
+                    .build();
         }
     }
 
@@ -105,20 +123,23 @@ public class UserResource {
     @APIResponse(responseCode = "200",
             description = "Posodobi uporabnika",
             content = @Content(
-                    schema = @Schema(implementation = User.class))
+                    schema = @Schema(implementation = Uporabnik.class))
     )
     @APIResponse(responseCode = "500",
             description = "Napaka pri posodabljanju uporabnika.")
     @PUT
-    public Response updateUser(User user) {
-        User user1 = userDAO.updateUser(user);
-        if (user1 != null) {
+    public Response updateUser(Uporabnik uporabnik) {
+        Uporabnik uporabnik1 = userDAO.updateUser(uporabnik);
+        if (uporabnik1 != null) {
             return Response
                     .status(Response.Status.OK)
-                    .entity(user1)
+                    .entity(uporabnik1)
                     .build();
         } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(false)
+                    .build();
         }
     }
 }

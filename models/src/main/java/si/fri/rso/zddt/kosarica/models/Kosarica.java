@@ -16,7 +16,7 @@ import java.util.List;
                         query = "SELECT k FROM Kosarica k where k.id = :kosaricaId"),
                 //vrni kosarico glede na user_id
                 @NamedQuery(name = "Kosarica.getByUserId",
-                        query = "SELECT k FROM Kosarica k where k.user.id = :userId")
+                        query = "SELECT k FROM Kosarica k where k.uporabnik.id = :userId")
         })
 public class Kosarica implements Serializable {
 
@@ -25,11 +25,34 @@ public class Kosarica implements Serializable {
     @Column(name = "kosarica_id")
     private Integer id;
 
-    @OneToMany
-    @JoinColumn(name = "izdelek_id")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Izdelek> izdelki;
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Uporabnik uporabnik;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<Izdelek> getIzdelki() {
+        return izdelki;
+    }
+
+    public void setIzdelki(List<Izdelek> izdelki) {
+        this.izdelki = izdelki;
+    }
+
+    public Uporabnik getUporabnik() {
+        return uporabnik;
+    }
+
+    public void setUporabnik(Uporabnik uporabnik) {
+        this.uporabnik = uporabnik;
+    }
 }

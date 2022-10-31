@@ -1,24 +1,27 @@
 package si.fri.rso.zddt.kosarica.models;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user")
+@Table(name = "uporabnik")
 @NamedQueries(value =
         {
                 //vrni vse uporabnike
-                @NamedQuery(name = "User.getAll",
-                        query = "SELECT u FROM User u"),
+                @NamedQuery(name = "Uporabnik.getAll",
+                        query = "SELECT u FROM Uporabnik u"),
                 //vrni uporabnika glede na id
-                @NamedQuery(name = "User.getById",
-                        query = "SELECT u FROM User u WHERE u.id = :userId")
+                @NamedQuery(name = "Uporabnik.getById",
+                        query = "SELECT u FROM Uporabnik u WHERE u.id = :userId")
         })
-public class User implements Serializable {
+@ToString
+public class Uporabnik implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "uporabnik_id")
     private Integer id;
 
     private String firstname;
@@ -26,6 +29,10 @@ public class User implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstname() {
