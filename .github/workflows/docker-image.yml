@@ -1,13 +1,12 @@
-name: Docker Image CI
+name: build with Maven and package as Docker image
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ main ]
 
 jobs:
-
   build:
 
     runs-on: ubuntu-latest
