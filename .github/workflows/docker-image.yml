@@ -26,4 +26,4 @@ jobs:
         with:
           file: ./Dockerfile_with_maven_build
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rso-kosarica-microservice:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/rso-kosarica-microservice:latest
