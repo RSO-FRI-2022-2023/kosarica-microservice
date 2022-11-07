@@ -1,8 +1,8 @@
 package si.fri.rso.zddt.kosarica.services.dao;
 
 import lombok.extern.slf4j.Slf4j;
-import si.fri.rso.zddt.kosarica.models.Izdelek;
-import si.fri.rso.zddt.kosarica.models.Kosarica;
+import si.fri.rso.zddt.common.models.Izdelek;
+import si.fri.rso.zddt.common.models.Kosarica;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;

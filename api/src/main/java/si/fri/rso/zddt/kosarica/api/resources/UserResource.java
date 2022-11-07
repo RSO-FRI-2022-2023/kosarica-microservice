@@ -7,7 +7,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import si.fri.rso.zddt.kosarica.models.Uporabnik;
+import si.fri.rso.zddt.common.models.Uporabnik;
 import si.fri.rso.zddt.kosarica.services.dao.UserDAO;
 
 import javax.inject.Inject;
