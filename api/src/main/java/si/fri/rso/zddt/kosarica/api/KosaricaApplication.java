@@ -11,8 +11,7 @@ import javax.ws.rs.core.Application;
 
 @OpenAPIDefinition(info = @Info(title = "Product catalog API", version = "v1",
         contact = @Contact(email = "dt1193@student.uni-lj.si"),
-        license = @License(name = "dev"), description = "API for managing products."),
-        servers = @Server(url = "https://localhost:8080/"))
+        license = @License(name = "dev"), description = "API for managing products."))
 @ApplicationPath("/v1")
 public class KosaricaApplication extends Application {
 }
