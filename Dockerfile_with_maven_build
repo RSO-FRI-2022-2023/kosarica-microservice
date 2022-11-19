@@ -1,6 +1,6 @@
 FROM maven:3.6.3-openjdk-15 AS build
-COPY ./ /app
 WORKDIR /app
+COPY ./ /app
 RUN mvn --show-version --update-snapshots --batch-mode clean package
 
 FROM --platform=linux/arm64 arm64v8/adoptopenjdk:15-jre-hotspot as stage-arm64
@@ -10,7 +10,6 @@ ARG TARGETARCH
 # Select final stage based on TARGETARCH ARG
 FROM stage-${TARGETARCH} as final
 
-RUN mkdir /app
 WORKDIR /app
 COPY --from=build ./app/api/target/kosarica-api-1.0-SNAPSHOT.jar /app
 EXPOSE 8080

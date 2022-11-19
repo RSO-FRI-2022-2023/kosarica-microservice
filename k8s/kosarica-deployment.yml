@@ -17,7 +17,7 @@ spec:
           name: kosarica-microservice
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-              value: jdbc:postgresql://130.61.221.196:5433/rso
+              value: jdbc:postgresql://songify.si:5433/rso
             - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: rso
             - name: KUMULUZEE_DATASOURCES0_PASSWORD

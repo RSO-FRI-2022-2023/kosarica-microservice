@@ -11,6 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Get current time
+          id: current-time
+          uses: josStorer/get-current-time@v2.0.2
+          with:
+            format: YYYY-MM-DD-HH-mm-ss
+            utcOffset: "+02:00"
+
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
@@ -21,4 +29,4 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Build & Push Docker image
-        run: docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/rso-kosarica-microservice:latest -f ./Dockerfile_with_maven_build --push --platform=linux/arm64,linux/amd64 .
+        run: docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/rso-kosarica-microservice:latest -t ${{ secrets.DOCKER_USERNAME }}/rso-kosarica-microservice:${{ steps.current-time.outputs.formattedTime }} -f ./Dockerfile_with_maven_build --push --all-tags --platform=linux/arm64,linux/amd64 .

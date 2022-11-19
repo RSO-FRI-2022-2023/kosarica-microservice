@@ -5,11 +5,9 @@ ARG TARGETARCH
 # Select final stage based on TARGETARCH ARG
 FROM stage-${TARGETARCH} as final
 
-RUN mkdir /app
-
 WORKDIR /app
 
-ADD ./api/target/kosarica-api-1.0.0-SNAPSHOT.jar /app
+COPY ./api/target/kosarica-api-1.0.0-SNAPSHOT.jar /app
 
 EXPOSE 8080
 

@@ -5,10 +5,13 @@ kumuluzee:
     name: dev
   datasources:
   - jndi-name: jdbc/KosaricaDS
-    connection-url: jdbc:postgresql://localhost:5432/izdelki
+    connection-url: jdbc:postgresql://songify.si:5433/rso
+    #connection-url: jdbc:postgresql://localhost:5432/izdelki
     #connection-url: jdbc:postgresql://host.docker.internal:5432/izdelki
-    username: dbuser
-    password: postgres
+    username: rso
+    #username: dbuser
+    password: rso_pass
+    #password: postgres
 integrations:
 #  nazadnje:
 #    base-url: http://localhost:8081/v1
