@@ -35,4 +35,4 @@ jobs:
           file: ./Dockerfile_with_maven_build
           push: true
           platforms: linux/arm64,linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rso-kosarica-microservice:latest,${{ secrets.DOCKER_USERNAME }}/rso-kosarica-microservice:${{ steps.current-time.outputs.formattedTime }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/rso-kosarica-microservice:latest,${{ secrets.DOCKER_USERNAME }}/rso-kosarica-microservice:${{ steps.current-time.outputs.formattedTime }}
