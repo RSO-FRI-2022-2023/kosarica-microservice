@@ -13,8 +13,8 @@ import javax.ws.rs.core.Application;
         contact = @Contact(email = "dt1193@student.uni-lj.si"),
         license = @License(name = "dev"), description = "API for managing products."),
         servers = {
-                @Server(url = "http://localhost:8080"),
-                @Server(url = "https://www.songify.si/rso")
+                @Server(url = "https://www.songify.si/rso/"),
+                @Server(url = "http://localhost:8080/")
         }
 )
 @ApplicationPath("/v1")

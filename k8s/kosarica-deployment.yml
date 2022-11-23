@@ -3,17 +3,23 @@ kind: Deployment
 metadata:
   name: kosarica-microservice-deployment
 spec:
-  replicas: 1
+  replicas: 3
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: kosarica-microservice
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
         app: kosarica-microservice
     spec:
       containers:
-        - image: divjad123/rso-kosarica-microservice:latest
+        - image: divjad123/rso-kosarica-microservice:2022-11-22-12-53-57
           name: kosarica-microservice
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
