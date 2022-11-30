@@ -3,23 +3,17 @@ kind: Deployment
 metadata:
   name: kosarica-microservice-deployment
 spec:
-  replicas: 3
-  revisionHistoryLimit: 3
+  replicas: 1
   selector:
     matchLabels:
       app: kosarica-microservice
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
   template:
     metadata:
       labels:
         app: kosarica-microservice
     spec:
       containers:
-        - image: divjad123/rso-kosarica-microservice:2022-11-22-12-53-57
+        - image: divjad123/rso-kosarica-microservice:2022-11-23-20-01-12
           name: kosarica-microservice
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -35,7 +29,18 @@ spec:
             - containerPort: 8080
               name: server
               protocol: TCP
-      restartPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: server
+            initialDelaySeconds: 20
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: server
+            initialDelaySeconds: 20
+            periodSeconds: 3
 
 ---
 

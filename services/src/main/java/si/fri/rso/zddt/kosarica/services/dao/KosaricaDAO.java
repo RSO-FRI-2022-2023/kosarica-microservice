@@ -1,6 +1,6 @@
 package si.fri.rso.zddt.kosarica.services.dao;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import si.fri.rso.zddt.common.models.Izdelek;
 import si.fri.rso.zddt.common.models.Kosarica;
 
@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Slf4j
+@Log4j2
 @ApplicationScoped
 public class KosaricaDAO {
 

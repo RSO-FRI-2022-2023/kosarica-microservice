@@ -1,6 +1,7 @@
 package si.fri.rso.zddt.kosarica.api.resources;
 
-import lombok.extern.slf4j.Slf4j;
+import com.kumuluz.ee.logs.cdi.Log;
+import lombok.extern.log4j.Log4j2;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -14,7 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Slf4j
+@Log4j2
 @Path("kosarica")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -30,6 +31,7 @@ public class KosaricaResource {
                     schema = @Schema(implementation = Kosarica.class))
     )
     @GET
+    @Log
     public Response getKosarice() {
         return Response
                 .status(Response.Status.OK)
