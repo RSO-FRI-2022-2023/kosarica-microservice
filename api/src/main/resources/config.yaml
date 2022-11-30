@@ -4,7 +4,7 @@ kumuluzee:
   env:
     name: dev
   server:
-    - base-url: https://www.songify.si/rso
+    base-url: https://www.songify.si/rso
   datasources:
     - jndi-name: jdbc/KosaricaDS
       connection-url: jdbc:postgresql://songify.si:5433/rso
