@@ -8,14 +8,10 @@ kumuluzee:
   datasources:
     - jndi-name: jdbc/KosaricaDS
       connection-url: jdbc:postgresql://songify.si:5433/rso
-      #connection-url: jdbc:postgresql://localhost:5432/izdelki
-      #connection-url: jdbc:postgresql://host.docker.internal:5432/izdelki
       username: rso
-      #username: dbuser
       password: rso_pass
       pool:
         max-size: 20
-      #password: postgres
   metrics:
     web-instrumentation:
       - name: kosarica-endpoint

@@ -13,7 +13,7 @@ spec:
         app: kosarica-microservice
     spec:
       containers:
-        - image: divjad123/rso-kosarica-microservice:2022-11-30-12
+        - image: divjad123/rso-kosarica-microservice:2022-11-23-20-01-12
           name: kosarica-microservice
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -29,18 +29,7 @@ spec:
             - containerPort: 8080
               name: server
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health/live
-              port: server
-            initialDelaySeconds: 20
-            periodSeconds: 3
-          readinessProbe:
-            httpGet:
-              path: /health/ready
-              port: server
-            initialDelaySeconds: 20
-            periodSeconds: 3
+
 
 ---
 
