@@ -20,6 +20,7 @@ import java.sql.SQLException;
 @Log
 public class DataSourceHealthCheckBean implements HealthCheck {
 
+    @Override
     public HealthCheckResponse call() {
         Connection conn = null;
 

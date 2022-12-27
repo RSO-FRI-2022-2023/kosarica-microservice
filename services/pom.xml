@@ -33,6 +33,10 @@
             <groupId>si.fri.rso.zddt.kosarica</groupId>
             <artifactId>models</artifactId>
         </dependency>
+        <dependency>
+            <artifactId>kumuluzee-logs-log4j2</artifactId>
+            <groupId>com.kumuluz.ee.logs</groupId>
+        </dependency>
     </dependencies>
 
 </project>

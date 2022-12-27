@@ -1,5 +1,6 @@
 package si.fri.rso.zddt.kosarica.api.resources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.kumuluz.ee.logs.cdi.Log;
 import lombok.extern.log4j.Log4j2;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Response;
 @Path("kosarica")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@CrossOrigin(supportedMethods = "GET, POST, PUT, DELETE")
 public class KosaricaResource {
 
     @Inject
@@ -49,12 +51,34 @@ public class KosaricaResource {
             description = "Košarica bi bila najdena.")
     @GET
     @Path("{id}")
-    public Response getKosarico(@PathParam("id") Integer id) {
+    public Response getKosarico(@PathParam("id") Integer id, @QueryParam("userId") Integer userId) {
         Kosarica kosarica = kosaricaDAO.getById(id);
         if (kosarica != null) {
             return Response
                     .status(Response.Status.OK)
-                    .entity(kosaricaDAO.getById(id))
+                    .entity(kosarica)
+                    .build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @Operation(description = "Vrni košarico glede na uporabnika.", summary = "Košarica")
+    @APIResponse(responseCode = "200",
+            description = "Košarica glede na uporabnika.",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON,
+                    schema = @Schema(implementation = Kosarica.class))
+    )
+    @APIResponse(responseCode = "404",
+            description = "Košarica ni bila najdena.")
+    @GET
+    @Path("user/{userId}")
+    public Response getKosaricoByUser(@PathParam("userId") Integer userId) {
+        Kosarica kosarica = kosaricaDAO.getByUserId(userId);
+        if (kosarica != null) {
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(kosarica)
                     .build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();

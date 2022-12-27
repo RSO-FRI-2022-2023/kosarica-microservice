@@ -18,8 +18,3 @@ kumuluzee:
         url-pattern: /v1/kosarica/*
       - name: user-endpoint
         url-pattern: /v1/user/*
-integrations:
-#  nazadnje:
-#    base-url: http://localhost:8081/v1
-#  rezervacije:
-#    base-url: http://localhost:8082/v1

@@ -5,6 +5,7 @@ import si.fri.rso.zddt.common.models.Izdelek;
 import si.fri.rso.zddt.common.models.Kosarica;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -19,6 +20,9 @@ public class KosaricaDAO {
 
     @PersistenceContext(unitName = "kosarica-jpa")
     private EntityManager em;
+
+    @Inject
+    private UserDAO userDAO;
 
     public List<Kosarica> getAll() {
         try {
@@ -38,6 +42,31 @@ public class KosaricaDAO {
             return em.find(Kosarica.class, kosaricaId);
         } catch (Exception e) {
             log.error("Napaka pri pridobivanju košarice glede na ID", e);
+        }
+
+        return null;
+    }
+
+    @Transactional
+    public Kosarica getByUserId(Integer userId) {
+        try {
+            TypedQuery<Kosarica> kosarica = em.createNamedQuery("Kosarica.getByUserId", Kosarica.class);
+            kosarica.setParameter("userId", userId);
+
+            List<Kosarica> resultList = kosarica.getResultList();
+
+            Kosarica k = resultList.isEmpty() ? null : resultList.get(0);
+
+            if (k == null) {
+                k = new Kosarica();
+                k.setUporabnik(userDAO.getUserById(userId));
+
+                em.persist(k);
+            }
+
+            return k;
+        } catch (Exception e) {
+            log.error("Napaka pri pridobivanju košarice glede na uporabnika", e);
         }
 
         return null;
