@@ -113,6 +113,10 @@ public class KosaricaDAO {
                 TypedQuery<Izdelek> izdelek = em.createNamedQuery("Izdelek.getById", Izdelek.class);
                 izdelek.setParameter("idIzdelka", i.getId());
 
+                if (kosarica.getIzdelki().contains(izdelek.getSingleResult())) {
+                    return kosarica;
+                }
+
                 kosarica.getIzdelki().add(izdelek.getSingleResult());
 
                 em.merge(kosarica);

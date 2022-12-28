@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kosarica-microservice-deployment
+  name: izdelki-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kosarica-microservice
+      app: izdelki-service
   template:
     metadata:
       labels:
-        app: kosarica-microservice
+        app: izdelki-service
     spec:
       containers:
-        - image: divjad123/rso-kosarica-microservice:2022-12-01-15
-          name: kosarica-microservice
+        - image: zigadrab/rso-izdelki-service
+          name: izdelki-service
           env:
             - name: KUMULUZEE_SERVER_BASEURL
               value: https://www.songify.si/rso/kosarica
@@ -48,7 +48,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kosarica-microservice
+  name: izdelki-service
 
 spec:
   ports:
@@ -57,22 +57,22 @@ spec:
       targetPort: server
 
   selector:
-    app: kosarica-microservice
+    app: izdelki-service
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kosarica-ingress
+  name: izdelki-ingress
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: default-example@kubernetescrd
 spec:
   rules:
     - http:
         paths:
-          - path: /rso/kosarica
+          - path: /rso/izdelki
             pathType: Prefix
             backend:
               service:
-                name: kosarica-microservice
+                name: izdelki-service
                 port:
                   name: server

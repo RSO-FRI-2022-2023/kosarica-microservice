@@ -124,3 +124,6 @@ spec:
     prefixes:
       - /rso/kosarica
       - /rso/valute
+      - /rso/izdelki
+      - /grafana
+      - /kibana
