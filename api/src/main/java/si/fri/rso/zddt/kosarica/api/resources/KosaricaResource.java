@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @CrossOrigin(supportedMethods = "GET, POST, PUT, DELETE")
+@Log
 public class KosaricaResource {
 
     @Inject
@@ -33,7 +34,6 @@ public class KosaricaResource {
                     schema = @Schema(implementation = Kosarica.class))
     )
     @GET
-    @Log
     public Response getKosarice() {
         return Response
                 .status(Response.Status.OK)
@@ -95,7 +95,7 @@ public class KosaricaResource {
     @Path("{id}/dodajIzdelek")
     public Response addIzdelek(@PathParam("id") Integer id, Izdelek izdelek) {
         return Response
-                .status(Response.Status.OK)
+                .status(Response.Status.CREATED)
                 .entity(kosaricaDAO.addIzdelek(id, izdelek))
                 .build();
     }
@@ -125,14 +125,14 @@ public class KosaricaResource {
         }
     }
 
-    @Operation(description = "Izbriši košarico", summary = "Izbriši košarico")
+    @Operation(description = "Izbriši izdelek iz košarice", summary = "Izbriši izdelek")
     @APIResponse(responseCode = "204",
-            description = "Brisanje košarice",
+            description = "Brisanje izdelka iz košarice",
             content = @Content(mediaType = MediaType.APPLICATION_JSON,
                     schema = @Schema(implementation = Kosarica.class))
     )
     @APIResponse(responseCode = "500",
-            description = "Napaka pri brisanju košarice.")
+            description = "Napaka pri brisanju izdelka iz košarice.")
     @DELETE
     @Path("{id}/izbrisiIzdelek/{izdelekId}")
     public Response deleteIzdelek(@PathParam("id") Integer id, @PathParam("izdelekId") Integer izdelekId) {

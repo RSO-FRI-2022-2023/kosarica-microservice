@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - image: zigadrab/rso-frontend:latest
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+            - containerPort: 80
+              name: server
+              protocol: TCP
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+
+spec:
+  ports:
+    - name: server
+      port: 80
+      targetPort: server
+
+  selector:
+    app: frontend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-example@kubernetescrd
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /rso/ui
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  name: server

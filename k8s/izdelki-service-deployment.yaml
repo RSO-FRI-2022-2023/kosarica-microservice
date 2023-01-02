@@ -15,13 +15,16 @@ spec:
       containers:
         - image: zigadrab/rso-izdelki-service
           name: izdelki-service
+          imagePullPolicy: Always
           env:
             - name: KUMULUZEE_SERVER_BASEURL
-              value: https://www.songify.si/rso/kosarica
+              value: https://www.songify.si/rso/izdelki
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
               value: jdbc:postgresql://songify.si:5433/rso
             - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: rso
+            - name: KUMULUZEE_CONFIG_CONSUL_AGENT
+              value: http://consul-server.consul:8500
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -35,13 +38,13 @@ spec:
             httpGet:
               path: /health/live
               port: server
-            initialDelaySeconds: 20
+            initialDelaySeconds: 70
             periodSeconds: 3
           readinessProbe:
             httpGet:
               path: /health/ready
               port: server
-            initialDelaySeconds: 20
+            initialDelaySeconds: 70
             periodSeconds: 3
 ---
 

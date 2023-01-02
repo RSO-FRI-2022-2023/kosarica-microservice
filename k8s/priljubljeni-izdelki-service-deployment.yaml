@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kosarica-microservice-deployment
+  name: priljubljeni-izdelki-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kosarica-microservice
+      app: priljubljeni-izdelki-service
   template:
     metadata:
       labels:
-        app: kosarica-microservice
+        app: priljubljeni-izdelki-service
     spec:
       containers:
-        - image: divjad123/rso-kosarica-microservice:2022-12-27-20
-          name: kosarica-microservice
-          imagePullPolicy: Always
+        - image: zigadrab/rso-priljubljeni-izdelki-service
+          name: priljubljeni-izdelki-service
           env:
             - name: KUMULUZEE_SERVER_BASEURL
-              value: https://www.songify.si/rso/kosarica
+              value: https://www.songify.si/rso/priljubljeni-izdelki
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
               value: jdbc:postgresql://songify.si:5433/rso
             - name: KUMULUZEE_DATASOURCES0_USERNAME
@@ -28,12 +27,11 @@ spec:
                 secretKeyRef:
                   name: rso-db-pass
                   key: KUMULUZEE_DATASOURCES0_PASSWORD
-            - name:	OAUTH2_REDIRECT_URL
-              value: https://www.songify.si/rso/kosarica/api-specs/ui
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
               name: server
               protocol: TCP
+
           livenessProbe:
             httpGet:
               path: /health/live
@@ -51,7 +49,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kosarica-microservice
+  name: priljubljeni-izdelki-service
 
 spec:
   ports:
@@ -60,22 +58,22 @@ spec:
       targetPort: server
 
   selector:
-    app: kosarica-microservice
+    app: priljubljeni-izdelki-service
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kosarica-ingress
+  name: priljubljeni-izdelki-ingress
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: default-example@kubernetescrd
 spec:
   rules:
     - http:
         paths:
-          - path: /rso/kosarica
+          - path: /rso/priljubljeni-izdelki
             pathType: Prefix
             backend:
               service:
-                name: kosarica-microservice
+                name: priljubljeni-izdelki-service
                 port:
                   name: server

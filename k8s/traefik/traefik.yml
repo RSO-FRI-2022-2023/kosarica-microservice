@@ -127,3 +127,5 @@ spec:
       - /rso/izdelki
       - /grafana
       - /kibana
+      - /rso/priljubljeni-izdelki
+      - /rso/ui
