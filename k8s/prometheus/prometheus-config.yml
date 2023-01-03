@@ -10,7 +10,10 @@ data:
           - targets: ['traefik-dashboard-service:8080']
       - job_name: 'kosarica-microservice'
         static_configs:
-          - targets: ['kosarica-microservice:8080']        
+          - targets: ['kosarica-microservice:8080']
+      - job_name: 'valute-microservice'
+        static_configs:
+          - targets: ['valute-microservice:8080']
 kind: ConfigMap
 metadata:
   name: prometheus-config

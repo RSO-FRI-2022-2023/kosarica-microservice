@@ -13,7 +13,7 @@ spec:
         app: kosarica-microservice
     spec:
       containers:
-        - image: divjad123/rso-kosarica-microservice:2022-12-27-20
+        - image: divjad123/rso-kosarica-microservice:latest
           name: kosarica-microservice
           imagePullPolicy: Always
           env:

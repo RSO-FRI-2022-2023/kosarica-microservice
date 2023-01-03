@@ -25,6 +25,10 @@ spec:
               value: rso
             - name: KUMULUZEE_CONFIG_CONSUL_AGENT
               value: http://consul-server.consul:8500
+            - name: KUMULUZEE_GRAPHQL_UI_MAPPING
+              value: /rso/izdelki/graphiql
+            - name: KUMULUZEE_GRAPHQL_MAPPING
+              value: /rso/izdelki/graphql
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
               valueFrom:
                 secretKeyRef:
